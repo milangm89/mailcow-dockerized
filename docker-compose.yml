@@ -426,7 +426,6 @@ services:
         - SNAT6_TO_SOURCE=${SNAT6_TO_SOURCE:-n}
         - REDIS_SLAVEOF_IP=${REDIS_SLAVEOF_IP:-}
         - REDIS_SLAVEOF_PORT=${REDIS_SLAVEOF_PORT:-}
-      network_mode: "host"
       volumes:
         - /lib/modules:/lib/modules:ro
 
@@ -583,7 +582,6 @@ services:
         - label=disable
       restart: always
       privileged: true
-      network_mode: "host"
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock:ro
         - /lib/modules:/lib/modules:ro
