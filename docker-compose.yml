@@ -47,8 +47,6 @@ services:
       restart: always
       depends_on:
         - unbound-mailcow
-      dns:
-        - ${IPV4_NETWORK:-172.22.1}.254
       environment:
         - TZ=${TZ}
         - SKIP_CLAMD=${SKIP_CLAMD:-n}
@@ -63,8 +61,6 @@ services:
         - dovecot-mailcow
       environment:
         - TZ=${TZ}
-        - IPV4_NETWORK=${IPV4_NETWORK:-172.22.1}
-        - IPV6_NETWORK=${IPV6_NETWORK:-fd4d:6169:6c63:6f77::/64}
         - REDIS_SLAVEOF_IP=${REDIS_SLAVEOF_IP:-}
         - REDIS_SLAVEOF_PORT=${REDIS_SLAVEOF_PORT:-}
       volumes:
@@ -118,8 +114,6 @@ services:
         - POP_PORT=${POP_PORT:-110}
         - POPS_PORT=${POPS_PORT:-995}
         - SIEVE_PORT=${SIEVE_PORT:-4190}
-        - IPV4_NETWORK=${IPV4_NETWORK:-172.22.1}
-        - IPV6_NETWORK=${IPV6_NETWORK:-fd4d:6169:6c63:6f77::/64}
         - SUBMISSION_PORT=${SUBMISSION_PORT:-587}
         - SMTPS_PORT=${SMTPS_PORT:-465}
         - SMTP_PORT=${SMTP_PORT:-25}
@@ -148,7 +142,6 @@ services:
         - MAILCOW_PASS_SCHEME=${MAILCOW_PASS_SCHEME:-BLF-CRYPT}
         - ACL_ANYONE=${ACL_ANYONE:-disallow}
         - ALLOW_ADMIN_EMAIL_LOGIN=${ALLOW_ADMIN_EMAIL_LOGIN:-n}
-        - IPV4_NETWORK=${IPV4_NETWORK:-172.22.1}
         - SOGO_EXPIRE_SESSION=${SOGO_EXPIRE_SESSION:-480}
         - SKIP_SOGO=${SKIP_SOGO:-n}
         - MASTER=${MASTER:-y}
@@ -205,7 +198,6 @@ services:
         - TZ=${TZ}
         - MAILCOW_HOSTNAME=${MAILCOW_HOSTNAME}
         - MAILCOW_PASS_SCHEME=${MAILCOW_PASS_SCHEME:-BLF-CRYPT}
-        - IPV4_NETWORK=${IPV4_NETWORK:-172.22.1}
         - ALLOW_ADMIN_EMAIL_LOGIN=${ALLOW_ADMIN_EMAIL_LOGIN:-n}
         - MAILDIR_GC_TIME=${MAILDIR_GC_TIME:-7200}
         - ACL_ANYONE=${ACL_ANYONE:-disallow}
@@ -368,7 +360,6 @@ services:
       privileged: true
       environment:
         - TZ=${TZ}
-        - IPV4_NETWORK=${IPV4_NETWORK:-172.22.1}
         - SNAT_TO_SOURCE=${SNAT_TO_SOURCE:-n}
         - SNAT6_TO_SOURCE=${SNAT6_TO_SOURCE:-n}
         - REDIS_SLAVEOF_IP=${REDIS_SLAVEOF_IP:-}
@@ -402,7 +393,6 @@ services:
         - WATCHDOG_VERBOSE=${WATCHDOG_VERBOSE:-n}
         - MAILCOW_HOSTNAME=${MAILCOW_HOSTNAME}
         - COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME:-mailcow-dockerized}
-        - IPV4_NETWORK=${IPV4_NETWORK:-172.22.1}
         - IP_BY_DOCKER_API=${IP_BY_DOCKER_API:-0}
         - CHECK_UNBOUND=${CHECK_UNBOUND:-1}
         - SKIP_CLAMD=${SKIP_CLAMD:-n}
@@ -512,10 +502,6 @@ services:
         - /lib/modules:/lib/modules:ro
 
 networks:
-  mailcow-network:
-    driver: bridge
-    driver_opts:
-      com.docker.network.bridge.name: br-mailcow
     ipam:
       driver: default
 volumes:
